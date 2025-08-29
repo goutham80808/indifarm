@@ -4,12 +4,13 @@ import { toast } from "react-toastify";
 
 const API_URL = import.meta.env.VITE_API_URL || "/api";
 
-const userFromStorage = localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user"))
-  : null;
-const tokenFromStorage = localStorage.getItem("token")
-  ? localStorage.getItem("token")
-  : null;
+const userFromLocal = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+const tokenFromLocal = localStorage.getItem("token") ? localStorage.getItem("token") : null;
+const userFromSession = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : null;
+const tokenFromSession = sessionStorage.getItem("token") ? sessionStorage.getItem("token") : null;
+
+const userFromStorage = userFromLocal || userFromSession;
+const tokenFromStorage = tokenFromLocal || tokenFromSession;
 
 // Register user
 export const register = createAsyncThunk(
@@ -59,8 +60,18 @@ export const login = createAsyncThunk(
         config
       );
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+      // If rememberMe is set, save to localStorage, else sessionStorage
+      if (userData.rememberMe) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("user");
+      } else {
+        sessionStorage.setItem("token", data.token);
+        sessionStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      }
 
       return data;
     } catch (error) {
