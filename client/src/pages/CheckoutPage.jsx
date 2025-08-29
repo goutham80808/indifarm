@@ -237,6 +237,7 @@ const CheckoutPage = () => {
                         type="number"
                         id={`quantity-${item.productId}`}
                         min="1"
+                        max={item.available}
                         value={item.quantity}
                         onChange={(e) =>
                           handleQuantityChange(
@@ -244,7 +245,7 @@ const CheckoutPage = () => {
                             Number.parseInt(e.target.value)
                           )
                         }
-                        className="w-16 px-2 py-1 border border-gray-300 rounded-md pl-3"
+                        className="w-24 px-2 py-1 border border-gray-300 rounded-md pl-3 text-base"
                       />
                     </div>
 

@@ -11,6 +11,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const newsletterRoutes = require("./routes/newsletterRoutes");
+const ratingRoutes = require("./routes/ratingRoutes");
 const connectDB = require("./db/connection");
 
 // Env is already loaded at the very top to ensure downstream modules see it
@@ -72,6 +73,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/newsletter", newsletterRoutes);
+app.use("/api/ratings", ratingRoutes);
 
 // Serve client build (single-host deploy)
 const clientBuildPath = path.join(__dirname, "..", "client", "dist");

@@ -8,6 +8,7 @@ import messageReducer from "./slices/messageSlice"
 import farmerReducer from "./slices/farmerSlice"
 import userReducer from "./slices/userSlice"
 import newsletterReducer from "./slices/newsletterSlice"
+import ratingReducer from "./slices/ratingSlice"
 
 export const store = configureStore({
   reducer: {
@@ -20,5 +21,6 @@ export const store = configureStore({
     farmers: farmerReducer,
     users: userReducer,
     newsletter: newsletterReducer,
+    ratings: ratingReducer,
   },
 })

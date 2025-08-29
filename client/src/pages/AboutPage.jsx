@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import {
   FaLeaf,
   FaUsers,
@@ -8,6 +9,7 @@ import {
 } from "react-icons/fa";
 
 const AboutPage = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   return (
     <div>
       <section className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-green-50 to-white">
@@ -183,29 +185,31 @@ const AboutPage = () => {
           </div>
         </section>
 
-        <section className="text-center mb-8">
-          <h2 className="text-3xl font-bold mb-6 text-gray-900">
-            Join Our Community
-          </h2>
-          <p className="text-xl text-gray-500 max-w-3xl mx-auto mb-8">
-            Whether you're a farmer looking to expand your customer base or a
-            consumer seeking fresh, local produce, IndiFarm is for you.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link
-              to="/register"
-              className="btn btn-primary px-8 py-3 text-lg font-bold shadow-md"
-            >
-              Sign Up Now
-            </Link>
-            <Link
-              to="/products"
-              className="btn btn-outline px-8 py-3 text-lg font-bold"
-            >
-              Browse Products
-            </Link>
-          </div>
-        </section>
+        {!isAuthenticated && (
+          <section className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-6 text-gray-900">
+              Join Our Community
+            </h2>
+            <p className="text-xl text-gray-500 max-w-3xl mx-auto mb-8">
+              Whether you're a farmer looking to expand your customer base or a
+              consumer seeking fresh, local produce, IndiFarm is for you.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link
+                to="/register"
+                className="btn btn-primary px-8 py-3 text-lg font-bold shadow-md"
+              >
+                Sign Up Now
+              </Link>
+              <Link
+                to="/products"
+                className="btn btn-outline px-8 py-3 text-lg font-bold"
+              >
+                Browse Products
+              </Link>
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );

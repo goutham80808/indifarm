@@ -10,6 +10,7 @@ import Loader from "../components/Loader";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,6 +23,17 @@ const LoginPage = () => {
     dispatch(clearError());
 
     if (isAuthenticated) {
+      // If not remembering, move credentials to sessionStorage and clear localStorage
+      if (!rememberMe) {
+        const token = localStorage.getItem("token");
+        const user = localStorage.getItem("user");
+        if (token && user) {
+          sessionStorage.setItem("token", token);
+          sessionStorage.setItem("user", user);
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+        }
+      }
       if (user?.role === "admin") {
         navigate("/admin/dashboard");
       } else if (user?.role === "farmer") {
@@ -30,7 +42,7 @@ const LoginPage = () => {
         navigate("/");
       }
     }
-  }, [dispatch, isAuthenticated, navigate, user]);
+  }, [dispatch, isAuthenticated, navigate, user, rememberMe]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -131,6 +143,8 @@ const LoginPage = () => {
                 name="remember-me"
                 type="checkbox"
                 className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
               />
               <label
                 htmlFor="remember-me"

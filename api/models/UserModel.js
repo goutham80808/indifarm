@@ -44,6 +44,17 @@ const UserSchema = new mongoose.Schema(
         lng: Number,
       },
     },
+    // Rating fields for farmers
+    averageRating: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 5,
+    },
+    totalRatings: {
+      type: Number,
+      default: 0,
+    },
     createdAt: {
       type: Date,
       default: Date.now,

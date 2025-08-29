@@ -1,5 +1,6 @@
 const Order = require("../models/OrderModel");
 const Product = require("../models/ProductModel");
+const Rating = require("../models/RatingModel");
 
 // @desc    Create an order
 // @route   POST /api/orders
@@ -57,17 +58,27 @@ exports.createOrder = async (req, res) => {
 exports.getConsumerOrders = async (req, res) => {
   try {
     const orders = await Order.find({ consumer: req.user._id })
-      .populate("farmer", "name")
+      .populate("farmer", "name averageRating totalRatings")
       .populate({
         path: "items.product",
         select: "name images",
       })
       .sort("-createdAt");
 
+    // Add rating information for each order
+    const ordersWithRatings = await Promise.all(
+      orders.map(async (order) => {
+        const rating = await Rating.findOne({ order: order._id });
+        const orderObj = order.toObject();
+        orderObj.rating = rating;
+        return orderObj;
+      })
+    );
+
     res.json({
       success: true,
-      count: orders.length,
-      data: orders,
+      count: ordersWithRatings.length,
+      data: ordersWithRatings,
     });
   } catch (error) {
     console.error(error);
@@ -169,6 +180,20 @@ exports.updateOrderStatus = async (req, res) => {
       });
     }
 
+    // If status is being set to completed, update product inventory
+    if (status === "completed" && order.status !== "completed") {
+      for (const item of order.items) {
+        const product = await Product.findById(item.product);
+        if (product) {
+          product.quantityAvailable -= item.quantity;
+          if (product.quantityAvailable <= 0) {
+            product.quantityAvailable = 0;
+            product.isActive = false;
+          }
+          await product.save();
+        }
+      }
+    }
     order.status = status;
     await order.save();
 

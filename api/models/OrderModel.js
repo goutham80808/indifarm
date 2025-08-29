@@ -60,6 +60,10 @@ const OrderSchema = new mongoose.Schema(
       default: "cash",
     },
     notes: String,
+    rated: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

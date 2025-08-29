@@ -21,6 +21,7 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const { product, quantity } = action.payload;
+      const available = product.inventory;
 
       if (
         state.cartItems.length === 0 ||
@@ -29,7 +30,11 @@ const cartSlice = createSlice({
         const existItem = state.cartItems.find(
           (item) => item.productId === product._id
         );
-
+        const currentQty = existItem ? existItem.quantity : 0;
+        if (currentQty + quantity > available) {
+          toast.error(`Only ${available} ${product.name} available. Please reduce quantity.`);
+          return;
+        }
         if (existItem) {
           state.cartItems = state.cartItems.map((item) =>
             item.productId === product._id

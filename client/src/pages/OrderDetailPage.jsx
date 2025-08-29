@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getOrderDetails } from "../redux/slices/orderSlice";
 import { sendMessage } from "../redux/slices/messageSlice";
 import Loader from "../components/Loader";
+import RatingModal from "../components/RatingModal";
 import {
   FaArrowLeft,
   FaLeaf,
@@ -22,13 +23,24 @@ const OrderDetailPage = () => {
 
   const [showMessageForm, setShowMessageForm] = useState(false);
   const [message, setMessage] = useState("");
+  const [showRatingModal, setShowRatingModal] = useState(false);
+  const [existingRating, setExistingRating] = useState(null);
 
   const { order, loading } = useSelector((state) => state.orders);
   const { user } = useSelector((state) => state.auth);
+  const { ratings } = useSelector((state) => state.ratings || {});
 
   useEffect(() => {
     dispatch(getOrderDetails(id));
   }, [dispatch, id]);
+
+  useEffect(() => {
+    // Find if rating exists for this order
+    if (ratings && order && ratings.length > 0) {
+      const found = ratings.find(r => r.orderId === order._id);
+      setExistingRating(found || null);
+    }
+  }, [ratings, order]);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
@@ -79,8 +91,11 @@ const OrderDetailPage = () => {
     return <Loader />;
   }
 
+  // Show Rate Farmer button only for consumers and completed orders
+  const canRateFarmer = user?.role === "consumer" && order?.status === "completed";
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
+    <>
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
       <Link
         to={user?.role === 'farmer' ? '/farmer/orders' : (user?.role === 'admin' ? '/admin/orders' : '/orders')}
         className="inline-flex items-center text-green-600 hover:text-green-700 mb-8 transition-colors duration-200"
@@ -96,9 +111,18 @@ const OrderDetailPage = () => {
               <h1 className="text-3xl font-bold mb-3 text-gray-800">
                 Order #{order._id.substring(0, 8)}
               </h1>
-              <p className="text-gray-500">
+              <p className="text-gray-500 mb-2">
                 Placed on {formatDate(order.createdAt)}
               </p>
+              {canRateFarmer && (
+                <button
+                  className="mt-2 px-5 py-2 flex items-center gap-2 bg-green-700 text-white rounded-lg shadow hover:bg-green-800 transition-colors font-semibold text-base"
+                  onClick={() => setShowRatingModal(true)}
+                >
+                  <FaLeaf className="text-green-300 text-lg" />
+                  {existingRating ? "Update Your Rating" : "Rate Farmer"}
+                </button>
+              )}
             </div>
             <div className="mt-4 md:mt-0">
               <span
@@ -329,9 +353,7 @@ const OrderDetailPage = () => {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
-                placeholder={`Write your message to the ${
-                  user.role === "consumer" ? "farmer" : "customer"
-                }...`}
+                placeholder={`Write your message to the ${user.role === "consumer" ? "farmer" : "customer"}...`}
                 rows="4"
                 required
               ></textarea>
@@ -365,8 +387,18 @@ const OrderDetailPage = () => {
           )}
         </div>
       </div>
-    </div>
-  );
+  </div>
+    {/* Rating Modal Integration */}
+    {showRatingModal && (
+      <RatingModal
+        isOpen={showRatingModal}
+        onClose={() => setShowRatingModal(false)}
+        order={order}
+        existingRating={existingRating}
+      />
+    )}
+  </>
+);
 };
 
 export default OrderDetailPage;

@@ -140,6 +140,8 @@ export const updateProfile = createAsyncThunk(
 export const logout = createAsyncThunk("auth/logout", async () => {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
+  sessionStorage.removeItem("token");
+  sessionStorage.removeItem("user");
   return null;
 });
 
@@ -205,7 +207,7 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
         state.user = action.payload.user;
       })
-      .addCase(loadUser.rejected, (state, action) => {
+      .addCase(loadUser.rejected, (state) => {
         state.loading = false;
         state.isAuthenticated = false;
         state.token = null;
