@@ -80,8 +80,8 @@ CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 SENDGRID_API_KEY=your_sendgrid_api_key
 EMAIL_FROM=verified_sender@yourdomain.com
-EMAIL_FROM_NAME=IndiFarm
-FEATURE_EMAIL_NEW_PRODUCT=false
+EMAIL_FROM_NAME=sender_name
+FEATURE_EMAIL_NEW_PRODUCT=false / true(your wish)
 ```
 
 **Frontend (.env):**
