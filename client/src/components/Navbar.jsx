@@ -106,14 +106,24 @@ const Navbar = () => {
                       </Link>
                     )}
 
+
                     {user?.role === "farmer" && (
-                      <Link
-                        to="/farmer/dashboard"
-                        className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-500"
-                        onClick={() => setIsProfileOpen(false)}
-                      >
-                        Farmer Dashboard
-                      </Link>
+                      <>
+                        <Link
+                          to="/farmer/dashboard"
+                          className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-500"
+                          onClick={() => setIsProfileOpen(false)}
+                        >
+                          Farmer Dashboard
+                        </Link>
+                        <Link
+                          to="/profile"
+                          className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-500"
+                          onClick={() => setIsProfileOpen(false)}
+                        >
+                          Profile
+                        </Link>
+                      </>
                     )}
 
                     {user?.role !== "admin" && user?.role !== "farmer" && (

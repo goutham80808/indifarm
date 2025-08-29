@@ -4,12 +4,15 @@
 
 // Derive backend origin for constructing full image URLs (no hardcoded localhost)
 const API_BASE = import.meta?.env?.VITE_API_URL || "/api";
+
 function getBackendOrigin() {
   try {
     if (typeof API_BASE === "string" && (API_BASE.startsWith("http://") || API_BASE.startsWith("https://"))) {
       return new URL(API_BASE).origin; // e.g., https://api.indifarm.com
     }
-  } catch (_) {}
+  } catch (Error) {
+    console.error("Failed to get backend origin:", Error);
+  }
   // Fallback to current site origin (useful when proxying /api in dev)
   return window.location.origin;
 }
