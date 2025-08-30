@@ -6,7 +6,7 @@ const User = require("./models/UserModel");
 function setupSocket(server) {
   const io = new Server(server, {
     cors: {
-      origin: process.env.FRONTEND_ORIGIN || "*",
+      origin: process.env.FRONTEND_ORIGIN,
       credentials: true,
     },
   });
@@ -40,13 +40,12 @@ function setupSocket(server) {
           .populate("sender", "_id name role")
           .populate("receiver", "_id name role");
 
-
-  // Emit to both receiver's and sender's rooms
-  io.to(msg.receiver).emit("receiveMessage", populatedMessage);
-  io.to(msg.sender).emit("receiveMessage", populatedMessage);
-      } catch (err) {
-        console.error("Socket message error:", err);
-      }
+        // Emit to both receiver's and sender's rooms
+        io.to(msg.receiver).emit("receiveMessage", populatedMessage);
+        io.to(msg.sender).emit("receiveMessage", populatedMessage);
+        } catch (err) {
+          console.error("Socket message error:", err);
+        }
     });
 
     // Add more events as needed (read receipts, typing, etc.)

@@ -63,7 +63,6 @@ connectDB();
 
 // Routes
 app.get("/", (req, res) => {
-  // Serve the SPA entry for root so frontend loads on the same host
   return res.sendFile(path.join(__dirname, "..", "client", "dist", "index.html"));
 });
 app.use("/api/auth", authRoutes);
