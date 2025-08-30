@@ -1,4 +1,4 @@
-# IndiFarm ![Logo](client/src/assets/placeholder.png)
+# IndiFarm <img src="client/src/assets/placeholder.png" alt="Logo" width="60" height="60" align="top" />
 
 **Connecting Farmers and Consumers, One Harvest at a Time!**
 
@@ -44,7 +44,7 @@
 ## 📦 Quick Start
 
 ```bash
-git clone https://github.com/yourusername/indifarm.git
+git clone https://github.com/goutham80808/indifarm.git
 cd indifarm
 cd api && npm install && npm run dev
 cd ../client && npm install && npm run dev
@@ -99,14 +99,40 @@ indifarm/
 
 ---
 
-## 🔧 API Highlights
 
-- `/api/auth/register` — Register
-- `/api/auth/login` — Login
-- `/api/products` — All products
-- `/api/orders` — Create/view orders
-- `/api/newsletter/subscribe` — Subscribe
-- `/api/categories` — All categories
+## 🔧 API Overview
+
+**Authentication**
+- `POST /api/auth/register` — Register new user
+- `POST /api/auth/login` — Login
+- `GET /api/auth/me` — Get current user
+
+**Users**
+- `GET /api/users` — List all users (admin)
+- `GET /api/users/farmers` — List all farmers
+- `PUT /api/users/profile` — Update user profile
+
+**Products**
+- `GET /api/products` — List all products
+- `POST /api/products` — Add product (farmer)
+- `PUT /api/products/:id` — Update product
+- `DELETE /api/products/:id` — Delete product
+
+**Orders**
+- `POST /api/orders` — Create order
+- `GET /api/orders/consumer` — Get consumer orders
+- `GET /api/orders/farmer` — Get farmer orders
+- `GET /api/orders/:id` — Get order details
+
+**Newsletter**
+- `POST /api/newsletter/subscribe` — Subscribe
+- `POST /api/newsletter/unsubscribe` — Unsubscribe
+- `GET /api/newsletter/count` — Subscriber count
+- `GET /api/newsletter/subscribers` — List subscribers (admin)
+
+**Categories**
+- `GET /api/categories` — List all categories
+- `POST /api/categories` — Add category (admin)
 
 ---
 
