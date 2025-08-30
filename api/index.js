@@ -45,7 +45,7 @@ const upload = multer({
 });
 
 // Middleware
-const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || "*";
+const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN;
 app.use(
   cors({
     origin: FRONTEND_ORIGIN,
