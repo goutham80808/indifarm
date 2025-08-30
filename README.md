@@ -32,11 +32,14 @@
 
 ---
 
-## � Recent Highlights
 
-- Real-time chat with instant updates
-- No duplicate messages, clean UI
-- Codebase cleaned for production
+## 🧑‍💻 Recent Highlights
+
+- Real-time chat with instant updates (Socket.io)
+- No duplicate messages after reload
+- Message handling logic refactored for maintainability and scalability
+- Codebase cleaned for production, security, and interview-readiness
+- All new features and bug fixes are added via extension, not modification, following SOLID principles
 
 ---
 
@@ -53,13 +56,14 @@ cd ../client && npm install && npm run dev
 
 ## ⚙️ Environment Setup
 
+
 **Backend (.env):**
 ```
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
-FRONTEND_ORIGIN=http://localhost:5173
-CLIENT_BASE_URL=http://localhost:5173
+FRONTEND_ORIGIN=https://your-frontend-url
+CLIENT_BASE_URL=https://your-frontend-url
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
@@ -71,7 +75,8 @@ FEATURE_EMAIL_NEW_PRODUCT=false
 
 **Frontend (.env):**
 ```
-VITE_API_URL=/api
+VITE_API_URL=https://your-backend-url/api
+VITE_SOCKET_URL=https://your-backend-url
 ```
 
 ---
@@ -99,7 +104,8 @@ indifarm/
 ---
 
 
-## 🔧 API Overview
+
+## 🔧 API Overview 
 
 **Authentication**
 - `POST /api/auth/register` — Register new user
@@ -135,6 +141,7 @@ indifarm/
 
 ---
 
+
 ## 🎯 Deploy & Checklist
 
 - Build: `npm --prefix api ci && npm --prefix client ci && npm --prefix client run build`
@@ -142,6 +149,7 @@ indifarm/
 - Node: v20
 - Health check: `/`
 - Set backend envs in Render dashboard
+- Set frontend envs in Vercel dashboard
 
 ---
 
