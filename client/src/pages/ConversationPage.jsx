@@ -58,20 +58,12 @@ const ConversationPage = () => {
     e.preventDefault();
     if (newMessage.trim() === "") return;
 
-    // Send via socket
+    // Send via socket only (backend will persist and emit)
     socket.emit("sendMessage", {
       sender: user._id,
       receiver: userId,
       content: newMessage,
     });
-
-    // Persist to DB
-    dispatch(
-      sendMessage({
-        receiver: userId,
-        content: newMessage,
-      })
-    );
     setNewMessage("");
   };
 
