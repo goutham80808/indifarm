@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 const API_URL = import.meta.env.VITE_API_URL || "/api";
 
-// Create rating
+// ...existing code...
 export const createRating = createAsyncThunk(
   "rating/createRating",
   async (ratingData, { rejectWithValue }) => {
@@ -34,7 +34,7 @@ export const createRating = createAsyncThunk(
   }
 );
 
-// Get farmer ratings
+// ...existing code...
 export const getFarmerRatings = createAsyncThunk(
   "rating/getFarmerRatings",
   async ({ farmerId, page = 1, limit = 10 }, { rejectWithValue }) => {
@@ -54,7 +54,7 @@ export const getFarmerRatings = createAsyncThunk(
   }
 );
 
-// Get order rating
+// ...existing code...
 export const getOrderRating = createAsyncThunk(
   "rating/getOrderRating",
   async (orderId, { rejectWithValue }) => {
@@ -82,7 +82,7 @@ export const getOrderRating = createAsyncThunk(
   }
 );
 
-// Update rating
+// ...existing code...
 export const updateRating = createAsyncThunk(
   "rating/updateRating",
   async ({ ratingId, ratingData }, { rejectWithValue }) => {
@@ -112,7 +112,7 @@ export const updateRating = createAsyncThunk(
   }
 );
 
-// Delete rating
+// ...existing code...
 export const deleteRating = createAsyncThunk(
   "rating/deleteRating",
   async (ratingId, { rejectWithValue }) => {
@@ -165,7 +165,7 @@ const ratingSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Create Rating
+  // ...existing code...
       .addCase(createRating.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -179,7 +179,7 @@ const ratingSlice = createSlice({
         state.error = action.payload;
         toast.error(action.payload);
       })
-      // Get Farmer Ratings
+  // ...existing code...
       .addCase(getFarmerRatings.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -194,7 +194,7 @@ const ratingSlice = createSlice({
         state.error = action.payload;
         toast.error(action.payload);
       })
-      // Get Order Rating
+  // ...existing code...
       .addCase(getOrderRating.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -207,7 +207,7 @@ const ratingSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // Update Rating
+  // ...existing code...
       .addCase(updateRating.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -222,7 +222,7 @@ const ratingSlice = createSlice({
         state.error = action.payload;
         toast.error(action.payload);
       })
-      // Delete Rating
+  // ...existing code...
       .addCase(deleteRating.pending, (state) => {
         state.loading = true;
         state.error = null;

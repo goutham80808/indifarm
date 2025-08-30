@@ -5,7 +5,7 @@ import { clearCart } from "./cartSlice"
 
 const API_URL = import.meta.env.VITE_API_URL || "/api"
 
-// Create order
+// ...existing code...
 export const createOrder = createAsyncThunk(
   "orders/createOrder",
   async (orderData, { rejectWithValue, getState, dispatch }) => {
@@ -21,7 +21,7 @@ export const createOrder = createAsyncThunk(
 
       const { data } = await axios.post(`${API_URL}/orders`, orderData, config)
 
-      // Clear cart after successful order
+  // ...existing code...
       dispatch(clearCart())
 
       return data
@@ -32,7 +32,7 @@ export const createOrder = createAsyncThunk(
   },
 )
 
-// Get consumer orders
+// ...existing code...
 export const getConsumerOrders = createAsyncThunk(
   "orders/getConsumerOrders",
   async (_, { rejectWithValue, getState }) => {
@@ -54,7 +54,7 @@ export const getConsumerOrders = createAsyncThunk(
   },
 )
 
-// Get farmer orders
+// ...existing code...
 export const getFarmerOrders = createAsyncThunk("orders/getFarmerOrders", async (_, { rejectWithValue, getState }) => {
   try {
     const token = getState().auth.token
@@ -73,7 +73,7 @@ export const getFarmerOrders = createAsyncThunk("orders/getFarmerOrders", async 
   }
 })
 
-// Get order details
+// ...existing code...
 export const getOrderDetails = createAsyncThunk("orders/getOrderDetails", async (id, { rejectWithValue, getState }) => {
   try {
     const token = getState().auth.token
@@ -92,7 +92,7 @@ export const getOrderDetails = createAsyncThunk("orders/getOrderDetails", async 
   }
 })
 
-// Update order status (farmer only)
+// ...existing code...
 export const updateOrderStatus = createAsyncThunk(
   "orders/updateOrderStatus",
   async ({ id, status }, { rejectWithValue, getState }) => {
@@ -115,7 +115,7 @@ export const updateOrderStatus = createAsyncThunk(
   },
 )
 
-// Get all orders (admin only)
+// ...existing code...
 export const getAllOrders = createAsyncThunk("orders/getAllOrders", async (_, { rejectWithValue, getState }) => {
   try {
     const token = getState().auth.token

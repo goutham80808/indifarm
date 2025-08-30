@@ -11,7 +11,7 @@ function getBackendOrigin() {
       return new URL(API_BASE).origin; // e.g., https://api.indifarm.com
     }
   } catch (Error) {
-    console.error("Failed to get backend origin:", Error);
+  // Error logging removed for security
   }
   // Fallback to current site origin (useful when proxying /api in dev)
   return window.location.origin;

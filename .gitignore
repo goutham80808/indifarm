@@ -39,3 +39,5 @@ temp/
 # Hosting tool dirs (optional)
 .vercel/
 .netlify/
+
+*.txt

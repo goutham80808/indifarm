@@ -4,7 +4,7 @@ import { toast } from "react-toastify"
 
 const API_URL = import.meta.env.VITE_API_URL || "/api"
 
-// Get all users (admin only)
+// ...existing code...
 export const getAllUsers = createAsyncThunk("users/getAllUsers", async (_, { rejectWithValue, getState }) => {
   try {
     const token = getState().auth.token
@@ -23,7 +23,7 @@ export const getAllUsers = createAsyncThunk("users/getAllUsers", async (_, { rej
   }
 })
 
-// Delete user (admin only)
+// ...existing code...
 export const deleteUser = createAsyncThunk("users/deleteUser", async (id, { rejectWithValue, getState }) => {
   try {
     const token = getState().auth.token

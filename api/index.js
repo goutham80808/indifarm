@@ -84,7 +84,11 @@ app.get(/^(?!\/(api|uploads)).*/, (req, res) => {
   return res.sendFile(path.join(clientBuildPath, "index.html"));
 });
 
-// Start server
-app.listen(PORT, () => {
+// Start server with Socket.io
+const httpServer = require("http").createServer(app);
+const setupSocket = require("./socket");
+setupSocket(httpServer);
+
+httpServer.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

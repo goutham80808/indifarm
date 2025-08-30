@@ -81,7 +81,7 @@ export const createProduct = createAsyncThunk(
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
-          // Don't set Content-Type for FormData, let the browser set it with boundary
+          // ...existing code...
         },
       };
 
@@ -110,7 +110,7 @@ export const updateProduct = createAsyncThunk(
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
-          // Don't set Content-Type for FormData, let the browser set it with boundary
+          // ...existing code...
         },
       };
 
@@ -179,7 +179,7 @@ const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Get all products
+  // ...existing code...
       .addCase(getProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -192,7 +192,7 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // Get product details
+  // ...existing code...
       .addCase(getProductDetails.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -205,7 +205,7 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // Get farmer products
+  // ...existing code...
       .addCase(getFarmerProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -218,7 +218,7 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // Create product
+  // ...existing code...
       .addCase(createProduct.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -235,7 +235,7 @@ const productSlice = createSlice({
         state.error = action.payload;
         toast.error(action.payload);
       })
-      // Update product
+  // ...existing code...
       .addCase(updateProduct.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -256,7 +256,7 @@ const productSlice = createSlice({
         state.error = action.payload;
         toast.error(action.payload);
       })
-      // Delete product
+  // ...existing code...
       .addCase(deleteProduct.pending, (state) => {
         state.loading = true;
         state.error = null;

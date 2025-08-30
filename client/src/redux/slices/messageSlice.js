@@ -111,6 +111,33 @@ const messageSlice = createSlice({
     setCurrentConversation: (state, action) => {
       state.currentConversation = action.payload
     },
+    addLiveMessage: (state, action) => {
+      const msg = action.payload;
+      // Always update the currentConversation's messages
+      const conversationId = state.currentConversation;
+      if (conversationId) {
+        if (state.messages[conversationId]) {
+          state.messages[conversationId].push(msg);
+        } else {
+          state.messages[conversationId] = [msg];
+        }
+        // Update conversations
+        const otherUser = msg.sender._id === conversationId ? msg.receiver : msg.sender;
+        const existingConversation = state.conversations.find(
+          (conv) => conv.user._id === otherUser._id
+        );
+        if (existingConversation) {
+          existingConversation.lastMessage = msg;
+          existingConversation.unreadCount = (existingConversation.unreadCount || 0) + 1;
+        } else {
+          state.conversations.push({
+            user: otherUser,
+            lastMessage: msg,
+            unreadCount: 1,
+          });
+        }
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -119,18 +146,9 @@ const messageSlice = createSlice({
         state.loading = true
         state.error = null
       })
-      .addCase(sendMessage.fulfilled, (state, action) => {
-        state.loading = false
-
-        const { receiver } = action.payload.data
-        const receiverId = receiver._id || receiver
-
-        // Add message to conversation
-        if (state.messages[receiverId]) {
-          state.messages[receiverId].push(action.payload.data)
-        } else {
-          state.messages[receiverId] = [action.payload.data]
-        }
+      .addCase(sendMessage.fulfilled, (state) => {
+  state.loading = false
+  // Do not add message here; rely on socket event for real-time update
       })
       .addCase(sendMessage.rejected, (state, action) => {
         state.loading = false
@@ -186,6 +204,6 @@ const messageSlice = createSlice({
   },
 })
 
-export const { clearMessageError, setCurrentConversation } = messageSlice.actions
+export const { clearMessageError, setCurrentConversation, addLiveMessage } = messageSlice.actions
 
 export default messageSlice.reducer
