@@ -18,6 +18,10 @@ const ProductsPage = () => {
     (state) => state.categories
   );
 
+  // Fallbacks to prevent 'not iterable' errors
+  const safeProducts = Array.isArray(products) ? products : [];
+  const safeCategories = Array.isArray(categories) ? categories : [];
+
   const [filters, setFilters] = useState({
     category: "",
     search: "",
@@ -70,7 +74,7 @@ const ProductsPage = () => {
     setShowFilters(!showFilters);
   };
 
-  const sortedProducts = [...products].sort((a, b) => {
+  const sortedProducts = [...safeProducts].sort((a, b) => {
     if (filters.sort === "newest") {
       return new Date(b.createdAt) - new Date(a.createdAt);
     } else if (filters.sort === "price-low") {
@@ -143,7 +147,7 @@ const ProductsPage = () => {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 >
                   <option value="">All Categories</option>
-                  {categories.map((category) => (
+                  {safeCategories.map((category) => (
                     <option key={category._id} value={category._id}>
                       {category.name}
                     </option>
