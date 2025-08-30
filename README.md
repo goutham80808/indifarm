@@ -1,5 +1,4 @@
-# IndiFarm <img src="client/src/assets/placeholder.png" alt="Logo" width="60" height="60" align="top" />
-
+# IndiFarm 🌽
 **Connecting Farmers and Consumers, One Harvest at a Time!**
 
 ---
