@@ -113,11 +113,14 @@ const messageSlice = createSlice({
     },
     addLiveMessage: (state, action) => {
       const msg = action.payload;
-      // Always update the currentConversation's messages
       const conversationId = state.currentConversation;
       if (conversationId) {
         if (state.messages[conversationId]) {
-          state.messages[conversationId].push(msg);
+          // Only add if not already present (by _id)
+          const alreadyExists = state.messages[conversationId].some(m => m._id === msg._id);
+          if (!alreadyExists) {
+            state.messages[conversationId].push(msg);
+          }
         } else {
           state.messages[conversationId] = [msg];
         }
